@@ -7,7 +7,7 @@ from tqdm import tqdm
 import pandas as pd
 import xml.etree.cElementTree as ET
 
-def getXMLFromOpenFaceData(path_folder_openface_data, path_output_xml):
+def getXMLFromOpenFaceData(path_folder_openface_data, conf, path_output_xml):
     """
     Generates XML data file from a folder containing the output csv files from OpenFace.
 
@@ -19,6 +19,9 @@ def getXMLFromOpenFaceData(path_folder_openface_data, path_output_xml):
     ----------
     path_folder_openface_data : str
     	Path where all the OpenFace outputs(csv files) are stored.
+	
+	conf : float
+		Threshold over which face detection should be recognised
 
     path_output_xml : str
     	Path where the output will be stores as openface_no_of_folders.xml.
@@ -66,11 +69,12 @@ def getXMLFromOpenFaceData(path_folder_openface_data, path_output_xml):
             width = right - left
             height = bottom - top
             #add box node
-            box = ET.SubElement(image_node, "box", height=str(height), left=str(left), top=str(top), width=str(width))
+            if(confidence > conf):
+	            box = ET.SubElement(image_node, "box", height=str(height), left=str(left), top=str(top), width=str(width))
     
     #save the XML
     tree = ET.ElementTree(root)
-    dest_name = path_output_xml + 'openface_{}_folders.xml'.format(len(list_csv_files))
+    dest_name = path_output_xml + 'openface_{}_folders_{}_confidence.xml'.format(len(list_csv_files),int(100*conf))
     tree.write(dest_name)
     print("xml written to {}".format(dest_name))  
 
