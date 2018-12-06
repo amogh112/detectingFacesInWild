@@ -13,7 +13,7 @@ def getXMLFromOpenFaceData(path_folder_openface_data, conf, path_output_xml):
 
 	Usage: If executing in scripts folder,
 			1. activate detect_face environment 
-			2. Run: python openface_to_xml.py 
+			2. Run: python openface_to_xml.py path_csv_folder path_XML_folder
 
     Parameters
     ----------
@@ -49,6 +49,7 @@ def getXMLFromOpenFaceData(path_folder_openface_data, conf, path_output_xml):
             #define the image node for which box will be a child.
             frame_num = row.frame
             image_node_file_name = name_video + " " + "%03d"%frame_num + ".jpg"
+            confidence = row[" confidence"]
             image_node=None
             #check if the attribute for frame already exists, create if not.
             for image_elem in images.findall('image'):
@@ -83,9 +84,10 @@ def main(argv):
 	#read commandline arguments
 	path_folder_openface_data = argv[1]
 	path_output_xml = argv[2]
+	confidence = argv[3]
 
 	#run and save XML
-	getXMLFromOpenFaceData(path_folder_openface_data, path_output_xml)
+	getXMLFromOpenFaceData(path_folder_openface_data, confidence, path_output_xml)
 
 
 if __name__ == '__main__':

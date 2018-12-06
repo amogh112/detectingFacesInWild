@@ -90,8 +90,7 @@ print("Training accuracy: {}".format(
 # # However, to get an idea if it really worked without overfitting we need to
 # # run it on images it wasn't trained on.  The next line does this.  Happily, we
 # # see that the object detector works perfectly on the testing images.
-# print("Testing accuracy: {}".format(
-#     dlib.test_simple_object_detector(testing_xml_path, "detector.svm")))
+print("Testing accuracy: {}".format(dlib.test_simple_object_detector(testing_xml_path, "detector.svm")))
 
 
 
