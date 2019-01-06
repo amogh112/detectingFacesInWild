@@ -1,4 +1,6 @@
+*.xml
 shape_predictor_68_face_landmarks.dat
 output_XML/
 output_images/
 faces/
+analysis/
